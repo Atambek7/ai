@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# 📟 Cyberpunk Game Concept & Prompt Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Профессиональный интерактивный инструмент для генерации игровых концепций, лора, игрового процесса и готовых системных промптов (Prompt Engineering) для последующего скармливания языковым моделям (LLM). 
 
-Currently, two official plugins are available:
+Интерфейс приложения стилизован под ретро-футуристичный терминал (HUD) с неоновым свечением, глитч-эффектами и встроенным звуковым синтезатором.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Основные возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* 🎮 **Гибкая настройка концепта**: Выбор жанра, сеттинга и стилистики, количества случайных механик (от 1 до 10) и режима генерации.
+* ⚡ **Режимы генерации (Generation Modes)**:
+  * `Кодер-ИИ` (AI Collector) — генерирует модульную архитектуру и полноценную кодовую структуру для HTML5 Canvas / WebGL.
+  * `Экстрим` (Impossible Mode) — сочетает безумные и несовместимые механики для хардкорного геймплея.
+  * `Ретро` (Retro Mode) — стилизует игру под 8/16-битную эру с CRT-рендерингом.
+  * `Мобильный` (Mobile Mode) — оптимизирует концепт под вертикальный тач-интерфейс.
+* 🔊 **Cyber-Synth Web Audio API**: Синтезатор звуковых эффектов (клики, успешные операции, системные сбои/глитчи), генерируемые кодом «на лету» без использования аудиофайлов.
+* 💾 **Локальный архив и логирование**:
+  * Сохранение сгенерированных дизайн-документов и промптов во встроенный архив.
+  * История генераций с быстрым доступом.
+  * Все данные сохраняются в `localStorage`.
+* 📱 **Кроссплатформенность**: Настроена поддержка Capacitor для сборки под Android устройства.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Стек технологий
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Frontend**: React 19, TypeScript, Vite
+* **Стилизация**: Модульный чистый CSS (с поддержкой переменных, неоновых градиентов, анимаций и глитч-эффектов)
+* **Аудио**: Web Audio API (генерация звуковых сигналов в реальном времени)
+* **Mobile SDK**: Capacitor (Android)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📦 Быстрый запуск
+
+### Требования
+* Установленный [Node.js](https://nodejs.org/) (версии 18 и выше)
+
+### Установка зависимостей
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Запуск в режиме разработки (Local Dev)
+```bash
+npm run dev
+```
+После запуска проект будет доступен по адресу: [http://localhost:5173/](http://localhost:5173/)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Сборка проекта
+```bash
+npm run build
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🤖 Инструкция по сборке мобильного приложения (Capacitor Android)
+
+Проект уже сконфигурирован для сборки под Android. Чтобы собрать APK:
+
+1. **Соберите веб-версию приложения**:
+   ```bash
+   npm run build
+   ```
+2. **Синхронизируйте ресурсы с Android-проектом**:
+   ```bash
+   npx cap sync
+   ```
+3. **Откройте проект в Android Studio**:
+   ```bash
+   npx cap open android
+   ```
+4. В Android Studio выберите **Build > Build Bundle(s) / APK(s) > Build APK(s)** для создания готового `.apk` файла.
+
+---
+
+## 📂 Структура проекта
+
+```text
+ai/
+├── android/               # Исходные файлы Android-приложения (Capacitor)
+├── public/                # Статические ресурсы и иконки
+├── src/
+│   ├── assets/            # Изображения и логотипы
+│   ├── components/        # Реакт-компоненты (TerminalFrame, ConfigPanel, PromptDisplay и др.)
+│   ├── data/              # Наборы данных (механики, сеттинги, шаблоны лора и героя)
+│   ├── generator/         # Алгоритмы и логика генерации концепта
+│   ├── logic/             # Хранилище состояния (useGeneratorState) и аудиосинтезатор (audioSynth)
+│   ├── styles/            # Оформление терминала и переменные темы
+│   ├── App.tsx            # Главный макет приложения
+│   └── main.tsx           # Точка входа React
+├── capacitor.config.ts    # Конфигурация Capacitor
+├── package.json           # Зависимости и скрипты
+└── vite.config.ts         # Конфигурация сборщика Vite
 ```
