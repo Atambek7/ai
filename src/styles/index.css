@@ -1,0 +1,209 @@
+@import './variables.css';
+@import './terminal.css';
+
+/* Global Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-core);
+  color: var(--text-cyber);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Bevel Cuts for Sections */
+.cyber-section {
+  position: relative;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.2);
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.cyber-section-title {
+  font-family: var(--font-header);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cyber-section-title::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 240, 255, 0.4), transparent);
+}
+
+/* Header styling */
+.cp-header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.cp-header h1 {
+  font-family: var(--font-header);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.cp-header .version-tag {
+  display: inline-block;
+  background: var(--neon-magenta);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  margin-top: 10px;
+  letter-spacing: 3px;
+  box-shadow: var(--glow-magenta);
+}
+
+.cp-header .subtitle {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Grid layout for Dashboard */
+.cp-dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .cp-dashboard {
+    grid-template-columns: 420px 1fr;
+  }
+}
+
+/* Tab controls */
+.cp-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cp-tab-btn {
+  background: rgba(10, 10, 16, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  color: var(--text-muted);
+  font-family: var(--font-header);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  cursor: pointer;
+  flex: 1;
+  transition: all var(--transition-speed);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.cp-tab-btn:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  color: var(--neon-cyan);
+}
+
+.cp-tab-btn.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.15) inset;
+  text-shadow: var(--glow-cyan);
+}
+
+/* Toggle audio button */
+.mute-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  color: var(--neon-cyan);
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  z-index: 10;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mute-toggle:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.mute-toggle.active {
+  border-color: var(--neon-magenta);
+  color: var(--neon-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+/* Animations */
+@keyframes neon-pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; }
+}
+
+.neon-pulse-cyan {
+  animation: neon-pulse 2s infinite ease-in-out;
+}
+
+.glow-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.04), transparent 60%);
+  z-index: 1;
+}
+
+/* Scanner effect for computing */
+.scanner-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--neon-lime);
+  box-shadow: var(--glow-lime);
+  z-index: 5;
+  pointer-events: none;
+  animation: scanner-anim 2s linear infinite;
+}
+
+@keyframes scanner-anim {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}

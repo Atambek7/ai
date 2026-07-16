@@ -1,0 +1,367 @@
+/* Cyberpunk CRT Terminal and Neon HUD Styles */
+
+/* 1. Cyberpunk Neon grid background */
+.cyberpunk-grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-core);
+  background-image: 
+    linear-gradient(rgba(18, 24, 38, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 24, 38, 0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.cyberpunk-grid-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, transparent 20%, rgba(3, 3, 6, 0.95) 85%);
+  pointer-events: none;
+}
+
+/* 2. CRT Terminal Screen wrapper with scanline overlay and curve shadow */
+.crt-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+/* CRT Scanline Filter */
+.crt-scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.06),
+    rgba(0, 255, 0, 0.02),
+    rgba(0, 0, 255, 0.06)
+  );
+  background-size: 100% 4px, 6px 100%;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* CRT Screen Flicker */
+.crt-flicker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(18, 16, 16, 0.015);
+  opacity: 0;
+  z-index: 998;
+  pointer-events: none;
+  animation: crt-flicker-anim 0.15s infinite;
+}
+
+@keyframes crt-flicker-anim {
+  0% { opacity: 0.25; }
+  50% { opacity: 0.35; }
+  100% { opacity: 0.25; }
+}
+
+/* Rolling scanline bar */
+.crt-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 240, 255, 0),
+    rgba(0, 240, 255, 0.08) 50%,
+    rgba(0, 240, 255, 0)
+  );
+  z-index: 1000;
+  pointer-events: none;
+  animation: crt-bar-anim 8s linear infinite;
+}
+
+@keyframes crt-bar-anim {
+  0% { transform: translateY(-100px); }
+  100% { transform: translateY(110vh); }
+}
+
+/* 3. Cyber Glassmorphic Panel with cut corners */
+.cyber-panel {
+  background: var(--bg-terminal);
+  border: var(--border-neon-cyan);
+  box-shadow: var(--glow-cyan);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  border-radius: var(--cyber-radius);
+  color: var(--text-cyber);
+  transition: all var(--transition-speed) ease;
+}
+
+/* Cyber cut-corner panel style */
+.cyber-panel-cut {
+  clip-path: polygon(
+    0 15px, 15px 0, 
+    calc(100% - 15px) 0, 100% 15px, 
+    100% calc(100% - 15px), calc(100% - 15px) 100%, 
+    15px 100%, 0 calc(100% - 15px)
+  );
+  border: none;
+  background: linear-gradient(135deg, rgba(16, 20, 32, 0.9) 0%, rgba(8, 8, 14, 0.95) 100%);
+  padding: 24px;
+}
+
+/* Fake border for clip-path panel using pseudo element */
+.cyber-panel-cut::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-magenta) 50%, var(--neon-purple) 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px;
+  clip-path: polygon(
+    0 15px, 15px 0, 
+    calc(100% - 15px) 0, 100% 15px, 
+    100% calc(100% - 15px), calc(100% - 15px) 100%, 
+    15px 100%, 0 calc(100% - 15px)
+  );
+}
+
+/* 4. Cyber Interactive Controls */
+.cyber-btn {
+  background: rgba(0, 0, 0, 0.6);
+  border: var(--border-neon-cyan);
+  color: var(--neon-cyan);
+  font-family: var(--font-header);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 0 4px rgba(0, 240, 255, 0.2);
+}
+
+.cyber-btn:hover {
+  background: var(--neon-cyan);
+  color: var(--text-dark);
+  box-shadow: var(--glow-cyan);
+  text-shadow: none;
+}
+
+.cyber-btn-magenta {
+  border: var(--border-neon-magenta);
+  color: var(--neon-magenta);
+}
+
+.cyber-btn-magenta:hover {
+  background: var(--neon-magenta);
+  color: var(--bg-core);
+  box-shadow: var(--glow-magenta);
+}
+
+.cyber-btn-lime {
+  border: var(--border-neon-lime);
+  color: var(--neon-lime);
+}
+
+.cyber-btn-lime:hover {
+  background: var(--neon-lime);
+  color: var(--bg-core);
+  box-shadow: var(--glow-lime);
+}
+
+/* 5. Glowing input ranges and selectors */
+.cyber-select {
+  background: rgba(10, 10, 16, 0.95);
+  border: var(--border-neon-cyan);
+  color: var(--text-cyber);
+  font-family: var(--font-mono);
+  padding: 10px 14px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+  transition: border var(--transition-speed);
+}
+
+.cyber-select:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+/* Cyber Range Slider */
+.cyber-range {
+  -webkit-appearance: none;
+  width: 100%;
+  background: rgba(0, 240, 255, 0.15);
+  height: 6px;
+  outline: none;
+  border-radius: 3px;
+}
+
+.cyber-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--neon-cyan);
+  border: 2px solid var(--bg-core);
+  box-shadow: var(--glow-cyan);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+
+.cyber-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.cyber-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--neon-cyan);
+  border: 2px solid var(--bg-core);
+  box-shadow: var(--glow-cyan);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.1s;
+}
+
+.cyber-range::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Glitch text effect */
+.glitch-txt {
+  position: relative;
+}
+
+.glitch-txt::before,
+.glitch-txt::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.glitch-txt::before {
+  left: 2px;
+  text-shadow: -1px 0 var(--neon-magenta);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-1 5s infinite linear alternate-reverse;
+}
+
+.glitch-txt::after {
+  left: -2px;
+  text-shadow: -1px 0 var(--neon-cyan);
+  clip: rect(85px, 450px, 140px, 0);
+  animation: glitch-anim-2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(15px, 9999px, 66px, 0); }
+  10% { clip: rect(34px, 9999px, 5px, 0); }
+  20% { clip: rect(80px, 9999px, 85px, 0); }
+  30% { clip: rect(54px, 9999px, 20px, 0); }
+  40% { clip: rect(12px, 9999px, 98px, 0); }
+  50% { clip: rect(43px, 9999px, 12px, 0); }
+  60% { clip: rect(90px, 9999px, 54px, 0); }
+  70% { clip: rect(6px, 9999px, 35px, 0); }
+  80% { clip: rect(76px, 9999px, 92px, 0); }
+  90% { clip: rect(23px, 9999px, 44px, 0); }
+  100% { clip: rect(56px, 9999px, 78px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(54px, 9999px, 12px, 0); }
+  10% { clip: rect(2px, 9999px, 98px, 0); }
+  20% { clip: rect(87px, 9999px, 43px, 0); }
+  30% { clip: rect(34px, 9999px, 90px, 0); }
+  40% { clip: rect(76px, 9999px, 23px, 0); }
+  50% { clip: rect(12px, 9999px, 76px, 0); }
+  60% { clip: rect(98px, 9999px, 15px, 0); }
+  70% { clip: rect(43px, 9999px, 34px, 0); }
+  80% { clip: rect(90px, 9999px, 80px, 0); }
+  90% { clip: rect(54px, 9999px, 54px, 0); }
+  100% { clip: rect(23px, 9999px, 6px, 0); }
+}
+
+/* 6. Typography Helpers */
+.font-header {
+  font-family: var(--font-header);
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.neon-cyan-text {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.neon-lime-text {
+  color: var(--neon-lime);
+  text-shadow: var(--glow-lime);
+}
+
+.neon-magenta-text {
+  color: var(--neon-magenta);
+  text-shadow: var(--glow-magenta);
+}
+
+/* Scrollbar styling for CRT Terminal */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 16, 0.85);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.35);
+  border-radius: var(--cyber-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
